@@ -5,4 +5,4 @@ metadata:
 data:
   # service name of mongodb pod
   database_url: mongodb-service
-  database_port: '27018'
+  database_port: '27017'

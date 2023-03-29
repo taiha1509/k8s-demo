@@ -19,8 +19,9 @@ spec:
       - name: mongo-express
         image: mongo-express
         ports:
-        - containerPort: 4444
-        env: 
+        - name: express-port
+          containerPort: 4444
+        env:
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom:
             secretKeyRef:
@@ -47,11 +48,11 @@ spec:
               # reference to configmap name
               name: mongodb-config-map
               key: database_url
-        # - name: ME_CONFIG_MONGODB_PORT
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: mongodb-config-map
-        #       key: database_port
+        - name: ME_CONFIG_MONGODB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-config-map
+              key: database_port
 ---
 apiVersion: v1
 kind: Service
@@ -67,6 +68,6 @@ spec:
       # service port
       port: 8088
       # containerPort of deployment
-      targetPort: 4444
+      targetPort: 8081
       # from 30000 -> 32767
       nodePort: 30012

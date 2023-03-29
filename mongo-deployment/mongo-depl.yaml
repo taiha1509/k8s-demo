@@ -40,7 +40,7 @@ spec:
   selector:
   # link to mongo deployment selector above
     app: mongodb
-  # type: LoadBalancer
+  type: LoadBalancer
   ports:
     - protocol: TCP
       # service port
@@ -48,4 +48,4 @@ spec:
       # containerPort of deployment
       targetPort: 27017
       # external port
-      # nodePort: 30000
+      nodePort: 30000
