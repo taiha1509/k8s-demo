@@ -1,0 +1,87 @@
+
+
+Pod:
+    Smallest unit of k8s
+    Abstraction over container
+    Usually 1 application per Pod
+    Each Pos gets its own IP address to communicate
+    Replica delployment
+
+Deployment:
+    Abstraction over Pod
+    Blueprint for create Pod
+
+Service:
+    Permanent IP address
+    Lifecycle of Pod and Service NOT connected
+    Also act as load balancer
+
+Ingress:
+    Forward request to service
+    use domain name instead of IP address
+
+Config Map:
+    external configuration of application
+    similar with .env file
+    don't push credential here
+
+Secret:
+    use to store secret data
+    store in base64 encoded
+
+Volumns:
+    storage on local mechine or remote
+    K8s doesn't manage data persistent
+
+Namespace
+    Clust inside cluster
+    Don't need in small project
+    usecase:
+        Many team, same application, avoid conflict delployment
+        Resouce sharing: 
+            staging and development
+            Blue/green Deployment
+        Access and resource limits on Namespaces
+    Charateristic:
+        You can't access most resources from another namespace
+        Can access service in another namespace
+        Some components which can't be created within a namespace:
+            Volumn, Node
+        By default, components are created in default namespace
+    Change active namespace: use kubectx tool ('default' is active namespace)
+
+K8s Architecture
+
+    Master node
+        4 process run:
+            API Server:
+                cluster gateway
+                authentication, validate request
+            Scheduler:
+                schedule new Pod
+                just decide on which Node new Pod should be scheduled (base on some metrics such as RAM, CPU,...)
+            Controller manager:
+                detects cluster state changes
+                call Scheduler to create a new Pod
+            etcd:
+                cluster brain
+                key value store
+        multi-master mode
+
+    Node
+        has multiple Pods
+        Worker node do the actual works
+        must has Kubelet and Container runtime (Docker), Kubelet Proxy
+        Kubelet:
+
+Minikube:
+    create virtual box on laptop
+    for testing purpose
+
+Kubeclt:
+    Command line tool for k8s
+
+
+Kubeclt command:
+    CRUD Deployment
+    CRUD
