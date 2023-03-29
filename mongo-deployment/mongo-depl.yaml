@@ -4,7 +4,7 @@ metadata:
   name: mongo-depl
   labels:
     apps: mongodb
- 
+
 spec:
   replicas: 1
   selector:
@@ -14,23 +14,29 @@ spec:
     metadata:
       labels:
         app: mongodb
-    spec: 
+    spec:
       containers:
-      - name: mongo
-        image: mongo
-        ports:
-        - containerPort: 27017
-        env: 
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: mongo-username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: mongo-password
+        - name: mongo
+          image: mongo
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-password
+          volumeMounts:
+            - name: mongodb-storage
+              mountPath: /home/hant/Downloads/test
+      volumes:
+        - name: mongodb-storage
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +44,7 @@ metadata:
   name: mongodb-service
 spec:
   selector:
-  # link to mongo deployment selector above
+    # link to mongo deployment selector above
     app: mongodb
   type: LoadBalancer
   ports:
